@@ -31,16 +31,6 @@ public class Player implements Runnable{
         int listSize;
         int randomTokenIndex;
 
-        boolean available = false;
-
-        while (available) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
         int step = 0;
 
         while (step != 3) {
@@ -55,14 +45,18 @@ public class Player implements Runnable{
             choseToken = gameTokens.get(randomTokenIndex);
 
             this.boardGame.removeToken(choseToken);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             this.choseTokens.add(choseToken);
             this.displayChoseToken(choseToken);
 
             step++;
         }
 
-        available = true;
-        notifyAll();
     }
 
     public void displayChoseToken(Token token){
